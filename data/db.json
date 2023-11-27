@@ -1,0 +1,22 @@
+{
+    "blogs": [  
+        {
+            "title": "Kathmandu",
+            "body": "Baneshwor",
+            "author": "Suman",
+            "id": 1
+        },
+        {
+            "title": "Janakpur",
+            "body": "Jaleshwor",
+            "author": "Pratik",
+            "id": 2
+        },
+        {
+            "title": "Dolakha",
+            "body": "Charikot",
+            "author": "Arun",
+            "id": 3
+        }
+    ]
+}
