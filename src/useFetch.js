@@ -9,8 +9,10 @@ const useFetch = (url) => {
 
     useEffect(() => {
         // console.log('use effect ran')
+        const abortCont = new AbortController();
+
         setTimeout(() => {
-            fetch(url) //fetch with this url
+            fetch(url, { signal: abortCont.signal }) //fetch with this url
                 // action after fetch
                 .then((res) => {
                     // console.log(res)
@@ -21,18 +23,34 @@ const useFetch = (url) => {
                         setIsPending(false)
                         throw Error(`Opss!! Error Encountered. ${res.status} ${res.statusText}`)
                     }
+
                     return res.json() // this one is promise
                 })
                 .then((data) => {
                     // here comes the data
-                    // console.log(data)fk
+                    // console.log(data)
                     setData(data)
                     setIsPending(false)
                 })
                 .catch((err) => {
-                    setError(err.message)
+
+                    if (err.name === 'AbortError') {
+                        console.log('fetch aborted!!!');
+                    }
+                    else {
+
+                        setError(err.message)
+                        setIsPending(false)
+                    }
+
                 })
         }, 300)
+
+        return () => {
+            console.log('Clean Up');
+            abortCont.abort();
+        }
+
     }, [])
 
     return { data, isPending, error }
